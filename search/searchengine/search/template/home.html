@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<header>
+
+</header>
+<head>
+    <title>Web Search</title>
+</head>
+
+<body>
+    <div class="container">
+
+
+        <div class="btn-group">
+            <form>
+                <div class="input-group">
+				   <input type="text" class="form-control" id ='id_querry' placeholder="Put your Querry here">
+				   <span class="input-group-btn">
+				        <button class="btn btn-default" type="button" id='id_search'>Go!</button>
+				   </span>
+
+				</div>
+            </form>
+            <div id ='id-result-set'>
+            </div>
+        </div>
+
+
+
+</body>
+<footer>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+    // Will accure at document load
+    // Will accure at every click
+    $('#id_search').click(function(){
+    	var q= $('#id_querry').val();
+    	if(q==''){
+    		$("#id_querry").css({"border-color":"red"});
+    	}
+    	else{
+            data = {query: q, csrfmiddlewaretoken: "{{ csrf_token }}"};
+           
+             document.getElementById("id-result-set").innerHTML= "Getting Result Please Wait"
+    		 $.ajax({
+            
+      type: 'POST',
+      url: "/search/",
+      data: data,
+      dataType: "text",
+      success: function(resultData) {
+        
+      	 document.getElementById("id-result-set").innerHTML= resultData;
+      }
+           });
+
+
+    	}
+    }) ;
+
+    });
+
+
+
+    </script>
+ 
+
+
+
+</footer>
+
+</html>
